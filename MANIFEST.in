@@ -1,0 +1,15 @@
+
+include CONTRIBUTING.rst
+include HISTORY.rst
+include LICENSE
+include README.rst
+include README.rst
+include .travis.yml
+include pgrid/components/cities.yaml
+include pgrid/components/connections.csv
+
+recursive-include tests *
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
+
+recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif
