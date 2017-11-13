@@ -75,4 +75,4 @@ class TestBoard(TestCase):
     def test_get_connection_cost(self):
         board = Board()
         cost = board.get_connection_cost('Tampa', 'Santa Fe')
-        self.assertEqual(cost, 47)
+        self.assertEqual(cost, 45)
