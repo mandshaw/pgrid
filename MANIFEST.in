@@ -6,6 +6,9 @@ include README.rst
 include README.rst
 include .travis.yml
 include pgrid/components/cities.yaml
+include pgrid/components/payouts.yaml
+include pgrid/components/powerplants.yaml
+include pgrid/components/restock_rates.yaml
 include pgrid/components/connections.csv
 
 recursive-include tests *

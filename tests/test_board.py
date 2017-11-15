@@ -2,6 +2,7 @@
 from unittest import TestCase
 
 from pgrid.board import Board
+from pgrid.powerplant import PowerPlant
 
 
 class TestBoard(TestCase):
@@ -76,3 +77,9 @@ class TestBoard(TestCase):
         board = Board()
         cost = board.get_connection_cost('Tampa', 'Santa Fe')
         self.assertEqual(cost, 45)
+
+    def test_board_power_plants(self):
+        board = Board()
+        for power_plant in board.power_plants:
+            self.assertIsInstance(power_plant, PowerPlant)
+        self.assertEqual(len(board.power_plants), 42)

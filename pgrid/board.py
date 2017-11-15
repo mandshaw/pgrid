@@ -7,6 +7,7 @@ from pgrid.engine import dijsktra
 
 from pgrid.cities import City
 from pgrid.components import component_path
+from pgrid.powerplant import PowerPlant
 
 
 class CityNotFound(BaseException):
@@ -20,6 +21,7 @@ class Board(object):
         self.cities = {}
         self.connections = defaultdict(list)
         self.connection_costs = {}
+        self.power_plants = []
 
         with open(os.path.join(component_path, 'cities.yaml'), 'r') as cities_file:
             cities = yaml.load(stream=cities_file)
@@ -33,6 +35,12 @@ class Board(object):
                 to_city = connection[1]
                 cost = connection[2]
                 self.add_connection(from_city, to_city, int(cost))
+
+        with open(os.path.join(component_path, 'powerplants.yaml')) as power_plants_file:
+            power_plants = yaml.load(stream=power_plants_file)
+            for power_plant in power_plants['powerplants']:
+                self.power_plants.append(PowerPlant(power_plant['Type'], power_plant['Efficiency'], power_plant['Power'], power_plant['Cost']))
+
 
         self.optimal_connection_map = {city: dijsktra(self, city) for city in self.cities.keys()}
 
