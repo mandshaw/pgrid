@@ -1,13 +1,15 @@
 import csv
 import os
-from collections import defaultdict
+from collections import defaultdict, deque
+import operator
+from random import shuffle
 
 import yaml
 from pgrid.engine import dijsktra
 
 from pgrid.cities import City
 from pgrid.components import component_path
-from pgrid.powerplant import PowerPlant
+from pgrid.powerplant import PowerPlant, ResourceType
 
 
 class CityNotFound(BaseException):
@@ -61,4 +63,17 @@ class Board(object):
 
     def get_connection_cost(self, from_city, to_city):
         return self.optimal_connection_map[from_city][to_city]
+
+    def shuffle_power_plants(self):
+        power_plants = deque(self.power_plants)
+        core = [power_plants.popleft() for i in range(8)]
+        # find the Green Power Plant for cost 13. That should be the first card
+        for i in range(len(power_plants)):
+            if power_plants[i].type == ResourceType.GREEN and power_plants[i].cost == 13:
+                first_card = power_plants[i]
+                del power_plants[i]
+                break
+        shuffle(power_plants)
+        self.power_plants = list(core) + [first_card] + list(power_plants) + [None]
+
 
