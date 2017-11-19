@@ -31,7 +31,7 @@ class Space(object):
             return False
 
 
-class Market(object):
+class ResourceMarket(object):
     """
     The Market on the board composed of a list of spaces
     """

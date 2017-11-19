@@ -1,9 +1,9 @@
 from unittest import TestCase
 
-from pgrid.market import Space, Market, ResourceType
+from pgrid.resourcemarket import Space, ResourceMarket, ResourceType
 
 
-class TestMarket(TestCase):
+class TestResourceMarket(TestCase):
 
     def test_space(self):
         space = Space(5)
@@ -33,7 +33,7 @@ class TestMarket(TestCase):
         self.assertTrue(space.uranium_only)
 
     def test_market(self):
-        market = Market()
+        market = ResourceMarket()
         for i in range (1, 9):
             self.assertEqual(market.spaces[i-1].cost, i)
         for i in range(16, 8, -2):
@@ -42,13 +42,13 @@ class TestMarket(TestCase):
             self.assertEqual(test_space.cost, i)
 
     def test_market_coal_on_init(self):
-        market = Market()
+        market = ResourceMarket()
         for space in market.spaces:
             if not space.uranium_only:
                 self.assertEqual(space.resources[ResourceType.COAL], space.LIMITS[ResourceType.COAL])
 
     def test_market_oil_on_init(self):
-        market = Market()
+        market = ResourceMarket()
         for space in market.spaces:
             if space.cost < 3:
                 self.assertEqual(space.resources[ResourceType.OIL], 0)
@@ -56,7 +56,7 @@ class TestMarket(TestCase):
                 self.assertEqual(space.resources[ResourceType.OIL], space.LIMITS[ResourceType.OIL])
 
     def test_market_garbage_on_init(self):
-        market = Market()
+        market = ResourceMarket()
         for space in market.spaces:
             if space.cost < 7:
                 self.assertEqual(space.resources[ResourceType.GARBAGE], 0)
@@ -64,7 +64,7 @@ class TestMarket(TestCase):
                 self.assertEqual(space.resources[ResourceType.GARBAGE], space.LIMITS[ResourceType.GARBAGE])
 
     def test_market_uranium_on_init(self):
-        market = Market()
+        market = ResourceMarket()
         for space in market.spaces:
             if space.cost < 14:
                 self.assertEqual(space.resources[ResourceType.URANIUM], 0)

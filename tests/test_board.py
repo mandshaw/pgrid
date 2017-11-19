@@ -78,29 +78,4 @@ class TestBoard(TestCase):
         cost = board.get_connection_cost('Tampa', 'Santa Fe')
         self.assertEqual(cost, 45)
 
-    def test_board_power_plants(self):
-        board = Board()
-        for power_plant in board.power_plants:
-            self.assertIsInstance(power_plant, PowerPlant)
-        self.assertEqual(len(board.power_plants), 42)
 
-    def test_board_shuffle_power_plant(self):
-        board = Board()
-        board.shuffle_power_plants()
-        self.assertEqual(board.power_plants[0].cost, 3)
-        self.assertEqual(board.power_plants[1].cost, 4)
-        self.assertEqual(board.power_plants[2].cost, 5)
-        self.assertEqual(board.power_plants[3].cost, 6)
-        self.assertEqual(board.power_plants[4].cost, 7)
-        self.assertEqual(board.power_plants[5].cost, 8)
-        self.assertEqual(board.power_plants[6].cost, 9)
-        self.assertEqual(board.power_plants[7].cost, 10)
-        self.assertEqual(board.power_plants[8].cost, 13)
-        self.assertFalse(
-            board.power_plants[9].cost == 11 and
-            board.power_plants[10].cost == 12 and
-            board.power_plants[11].cost == 14 and
-            board.power_plants[12].cost == 15 and
-            board.power_plants[13].cost == 16
-        )
-        self.assertEqual(board.power_plants[-1], None)
