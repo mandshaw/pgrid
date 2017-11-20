@@ -1,5 +1,6 @@
 
 from unittest import TestCase
+from unittest.mock import MagicMock
 
 from pgrid.board import Board
 from pgrid.powerplant import PowerPlant
@@ -78,4 +79,23 @@ class TestBoard(TestCase):
         cost = board.get_connection_cost('Tampa', 'Santa Fe')
         self.assertEqual(cost, 45)
 
+    def test_detetmine_play_order_win_on_cities(self):
+        board = Board()
+        board.players[0].cities = 3
+        board.players[1].cities = 7
+        board.determine_play_order()
+        self.assertEqual(
+            board.players[0].cities, 7
+        )
+
+    def test_detetmine_play_order_win_on_power_plants(self):
+        board = Board()
+        board.players[0].cities = 3
+        board.players[0].power_plants = [MagicMock(cost=6)]
+        board.players[1].cities = 3
+        board.players[1].power_plants = [MagicMock(cost=18)]
+        board.determine_play_order()
+        self.assertEqual(
+            board.players[0].highest_power_plant, 18
+        )
 

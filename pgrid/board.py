@@ -8,6 +8,7 @@ import yaml
 from pgrid.engine import dijsktra
 
 from pgrid.cities import City
+from pgrid.player import Player
 from pgrid.components import component_path
 from pgrid.powerplant import PowerPlant, ResourceType
 
@@ -19,11 +20,12 @@ class ConnectionNotFound(BaseException):
     pass
 
 class Board(object):
-    def __init__(self):
+    def __init__(self, number_of_players=2):
         self.cities = {}
         self.connections = defaultdict(list)
         self.connection_costs = {}
         self.power_plants = []
+        self.players = [Player('Player {}'.format(str(i))) for i in range(0, number_of_players)]
 
         with open(os.path.join(component_path, 'cities.yaml'), 'r') as cities_file:
             cities = yaml.load(stream=cities_file)
@@ -59,6 +61,9 @@ class Board(object):
 
     def get_connection_cost(self, from_city, to_city):
         return self.optimal_connection_map[from_city][to_city]
+
+    def determine_play_order(self):
+        self.players.sort(key=lambda player: (player.cities, player.highest_power_plant), reverse=True)
 
 
 

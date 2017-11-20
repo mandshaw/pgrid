@@ -13,10 +13,18 @@ class Player(object):
         self.name = name
         self.cities = 0
         self.wallet = 50
+        self.power_plants = []
 
     @property
     def balance(self):
         return self.wallet
+
+    @property
+    def highest_power_plant(self):
+        if len(self.power_plants) > 0:
+            return sorted(self.power_plants, key=lambda powerplant: powerplant.cost, reverse=True)[0].cost
+        else:
+            return 0
 
     def debit(self, value):
         if value < self.wallet:
@@ -30,4 +38,5 @@ class Player(object):
     def add_city(self):
         self.cities += 1
 
-
+    def add_power_plant(self, power_plant):
+        self.power_plants.append(power_plant)
